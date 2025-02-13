@@ -1,0 +1,343 @@
+<!-- home.html (Homepage Content) -->
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookHive - Home</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+    <style>
+ /* Hero Heading Section */
+ .hero-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5e3c3, #e7d3b1); 
+    color: #5a3e2b;
+    font-family: 'Playfair Display', serif;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-align: center;
+    position: relative;
+    padding: 20px;
+    margin-top: 5%;
+}
+
+/* Large and Creative Typography */
+.hero-heading h1 {
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1.2;
+    display: inline-block;
+    background: -webkit-linear-gradient(45deg, #5a3e2b, #8b5e3c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 1.2s ease-in-out;
+    max-width: 80%;
+}
+
+/* Styling the Words Individually */
+.hero-heading h1 span {
+    display: inline-block;
+    /* transform: rotate(-2deg); */
+    padding: 5px 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+
+        .swiper-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 85%;
+            max-width: 950px;
+            height: 260px;
+            margin: auto;
+            margin-top: 10%;
+            margin-right: 5%;
+            position: relative;
+            padding-bottom: 50px;
+            /* Space for navigation buttons */
+        }
+
+        /* Swiper Wrapper */
+        .swiper-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Swiper Slide */
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+            width: 220px !important;
+            margin: 0 15px;
+            /* Increased spacing for better look */
+        }
+
+        /* Image with Blur Effect */
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(3px);
+            transition: filter 0.3s ease-in-out;
+        }
+
+        /* Gradient Overlay for Readability */
+        .swiper-slide::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1));
+            z-index: 1;
+        }
+
+        /* Slide Text */
+        .slide-text {
+            font-family: 'Playfair Display', serif;
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px 15px;
+            border-radius: 8px;
+            width: 85%;
+            z-index: 2;
+            transition: background 0.3s ease-in-out;
+        }
+
+        /* Hover Effects */
+        .swiper-slide:hover {
+            transform: scale(1.05);
+        }
+
+        .swiper-slide:hover img {
+            filter: blur(1px);
+        }
+
+        .swiper-slide:hover .slide-text {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+
+         /* Membership Section */
+         .membership-section {
+            background: #faf3e0;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .membership-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .membership-card:hover {
+            transform: scale(1.05);
+        }
+
+        .membership-card h3 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .membership-card p {
+            font-size: 18px;
+            color: #5a3e2b;
+        }
+
+        .membership-card ul {
+            text-align: left;
+            padding-left: 0;
+        }
+
+        .membership-card ul li {
+            list-style: none;
+            padding: 5px 0;
+        }
+
+        .membership-btn {
+            background: #8b5e3c;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: #5a3e2b;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <!-- Eye-Catching Heading Section -->
+    <section class="hero-heading">
+        <h1>Where <span>Stories Swarm</span> and <span>Knowledge Thrives!</span></h1>
+    </section>
+    <!-- Swiper Card Carousel -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="https://thumbs.dreamstime.com/b/books-library-concept-education-literature-reading-100259471.jpg"
+                    alt="Book 1">
+                <h2 class="slide-text">Read Library Books Online</h2>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://static.vecteezy.com/system/resources/previews/033/115/388/non_2x/learning-concept-open-textbook-in-a-library-with-academic-surroundings-ai-generated-photo.jpg"
+                    alt="Book 2">
+                <h2 class="slide-text">Set a Yearly Reading Goal</h2>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://media.istockphoto.com/id/949118068/photo/books.jpg?s=612x612&w=0&k=20&c=1vbRHaA_aOl9tLIy6P2UANqQ27KQ_gSF-BH0sUjQ730="
+                    alt="Book 3">
+                <h2 class="slide-text">Keep Track of Your Favourite Book</h2>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://thumbs.dreamstime.com/b/books-library-concept-education-literature-reading-100259471.jpg"
+                    alt="Book 1">
+                <h2 class="slide-text">Minimal Rent</h2>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://static.vecteezy.com/system/resources/previews/033/115/388/non_2x/learning-concept-open-textbook-in-a-library-with-academic-surroundings-ai-generated-photo.jpg"
+                    alt="Book 2">
+                <h2 class="slide-text">Buy Old Book at 50% of Price</h2>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://media.istockphoto.com/id/949118068/photo/books.jpg?s=612x612&w=0&k=20&c=1vbRHaA_aOl9tLIy6P2UANqQ27KQ_gSF-BH0sUjQ730="
+                    alt="Book 3">
+                <h2 class="slide-text">Keep Track of Your Favourite Book</h2>
+            </div>
+
+        </div>
+
+    </div>
+
+     <!-- Membership Section -->
+     <section class="membership-section">
+        <div class="container">
+            <h2 class="mb-4">Choose Your Membership Plan</h2>
+            <div class="row justify-content-center">
+                <!-- Monthly Plan -->
+                <div class="col-md-5 m-2">
+                    <div class="membership-card p-4">
+                        <h3>Monthly Plan</h3>
+                        <p><strong>$50 / month</strong></p>
+                        <ul>
+                            <li>✔ Borrow up to 10 books</li>
+                            <li>✔ Access exclusive eBooks</li>
+                            <li>✔ Priority Book Reservations</li>
+                            <li>✔ 24/7 Online Support</li>
+                        </ul>
+                        <a href="#" class="membership-btn">Subscribe Now</a>
+                    </div>
+                </div>
+                
+                <!-- Yearly Plan -->
+                <div class="col-md-5 m-2">
+                    <div class="membership-card p-4">
+                        <h3>Yearly Plan</h3>
+                        <p><strong>$200 / year</strong></p>
+                        <ul>
+                            <li>✔ Borrow unlimited books</li>
+                            <li>✔ Access to premium eBooks</li>
+                            <li>✔ Free Book Delivery</li>
+                            <li>✔ Early Access to New Arrivals</li>
+                        </ul>
+                        <a href="#" class="membership-btn">Subscribe Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <h2>Contact Us</h2>
+        <p>If you face any issues, feel free to reach out!</p>
+        <p>Email: <a href="mailto:librarian@gmail.com" style="color: #f5e3c3;">librarian@gmail.com</a></p>
+        <p>Phone: <strong>9876543210</strong></p>
+        <p>Address: 123 Library Street, BookTown, USA</p>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Swiper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            loop: true,
+            slidesPerView: "auto",
+            spaceBetween: 25, // More space between slides
+            centeredSlides: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+                delay: 1000,
+                disableOnInteraction: false,
+            },
+        });
+    </script>
+
+</body>
+
+</html>
+
+{% endblock %}
