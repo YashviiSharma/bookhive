@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask import render_template
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -43,3 +44,13 @@ from app import app, db
 with app.app_context():
     db.create_all()
     print("Tables created successfully!")
+
+
+
+
+
+
+
+@app.route('/')
+def home():
+    return render_template('homepage.html')
