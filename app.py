@@ -1,9 +1,12 @@
 
+
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, jsonify
+
+
 from database import db, init_app
-from models import Book
+from models import Book, Member, Transaction
 
 app = Flask(__name__)
 
