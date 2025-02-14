@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
     <style>
- /* Hero Heading Section */
  .hero-heading {
     display: flex;
     align-items: center;
@@ -68,6 +67,28 @@
         transform: translateY(0);
     }
 }
+
+/* Librarian Stats Section */
+.stats-section {
+            display: flex;
+            justify-content: space-around;
+            background: #f5e3c3;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #5a3e2b;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .stats-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+        }
 
 
 
@@ -227,6 +248,22 @@
     <section class="hero-heading">
         <h1>Where <span>Stories Swarm</span> and <span>Knowledge Thrives!</span></h1>
     </section>
+
+    <!-- Librarian Stats Section -->
+    <section class="stats-section">
+        <div class="stats-box">
+            <h4>Total Members</h4>
+            <p id="totalMembers">{{ total_members }}</p>
+        </div>
+        <div class="stats-box">
+            <h4>Total Books</h4>
+            <p id="totalBooks">0</p>
+        </div>
+        <div class="stats-box">
+            <h4>Monthly Growth</h4>
+            <p id="monthlyGrowth">0%</p>
+        </div>
+    </section>
     <!-- Swiper Card Carousel -->
     <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -266,42 +303,42 @@
     </div>
 
      <!-- Membership Section -->
-     <section class="membership-section">
-        <div class="container">
-            <h2 class="mb-4">Choose Your Membership Plan</h2>
-            <div class="row justify-content-center">
-                <!-- Monthly Plan -->
-                <div class="col-md-5 m-2">
-                    <div class="membership-card p-4">
-                        <h3>Monthly Plan</h3>
-                        <p><strong>$50 / month</strong></p>
-                        <ul>
-                            <li>✔ Borrow up to 10 books</li>
-                            <li>✔ Access exclusive eBooks</li>
-                            <li>✔ Priority Book Reservations</li>
-                            <li>✔ 24/7 Online Support</li>
-                        </ul>
-                        <a href="#" class="membership-btn">Subscribe Now</a>
-                    </div>
+<section class="membership-section">
+    <div class="container">
+        <h2 class="mb-4">Edit Membership Plans for Students</h2>
+        <div class="row justify-content-center">
+            <!-- Monthly Plan -->
+            <div class="col-md-5 m-2">
+                <div class="membership-card p-4">
+                    <h3 contenteditable="true" class="editable">Monthly Plan</h3>
+                    <p><strong contenteditable="true" class="editable">$50 / month</strong></p>
+                    <ul>
+                        <li contenteditable="true" class="editable">✔ Borrow up to 10 books</li>
+                        <li contenteditable="true" class="editable">✔ Access exclusive eBooks</li>
+                        <li contenteditable="true" class="editable">✔ Priority Book Reservations</li>
+                        <li contenteditable="true" class="editable">✔ 24/7 Online Support</li>
+                    </ul>
                 </div>
-                
-                <!-- Yearly Plan -->
-                <div class="col-md-5 m-2">
-                    <div class="membership-card p-4">
-                        <h3>Yearly Plan</h3>
-                        <p><strong>$200 / year</strong></p>
-                        <ul>
-                            <li>✔ Borrow unlimited books</li>
-                            <li>✔ Access to premium eBooks</li>
-                            <li>✔ Free Book Delivery</li>
-                            <li>✔ Early Access to New Arrivals</li>
-                        </ul>
-                        <a href="#" class="membership-btn">Subscribe Now</a>
-                    </div>
+            </div>
+
+            <!-- Yearly Plan -->
+            <div class="col-md-5 m-2">
+                <div class="membership-card p-4">
+                    <h3 contenteditable="true" class="editable">Yearly Plan</h3>
+                    <p><strong contenteditable="true" class="editable">$200 / year</strong></p>
+                    <ul>
+                        <li contenteditable="true" class="editable">✔ Borrow unlimited books</li>
+                        <li contenteditable="true" class="editable">✔ Access to premium eBooks</li>
+                        <li contenteditable="true" class="editable">✔ Free Book Delivery</li>
+                        <li contenteditable="true" class="editable">✔ Early Access to New Arrivals</li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+    <button id="saveChanges" class="membership-btn" style="display: none;">Save Changes</button>
+</section>
+
 
     <!-- Contact Section -->
     <section class="contact-section">
@@ -320,6 +357,30 @@
 
     <!-- Initialize Swiper -->
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        let editableElements = document.querySelectorAll(".editable");
+        let saveButton = document.getElementById("saveChanges");
+
+        // Show Save button when any text is edited
+        editableElements.forEach(element => {
+            element.addEventListener("input", () => {
+                saveButton.style.display = "block";
+            });
+        });
+
+        // Save Changes (Currently only logs the data, integrate with backend to save)
+        saveButton.addEventListener("click", function () {
+            let updatedPlans = [];
+            editableElements.forEach(element => {
+                updatedPlans.push(element.innerText.trim());
+            });
+
+            console.log("Updated Membership Plans:", updatedPlans);
+            alert("Changes saved successfully!");
+
+            saveButton.style.display = "none"; // Hide button after saving
+        });
+    });
         var swiper = new Swiper('.swiper-container', {
             loop: true,
             slidesPerView: "auto",
