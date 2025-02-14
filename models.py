@@ -1,54 +1,78 @@
-from flask_sqlalchemy import SQLAlchemy
+import os
+from peewee import Model, PostgresqlDatabase, CharField, IntegerField, TextField, BooleanField, DecimalField, AutoField, ForeignKeyField, DateTimeField
 from datetime import datetime
+from dotenv import load_dotenv
 
-db = SQLAlchemy()
+load_dotenv()
+
+# Database Configuration
+DATABASE = {
+    'name': os.getenv('DB_NAME'),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_HOST'),
+    'port': int(os.getenv('DB_PORT'))
+}
+
+db = PostgresqlDatabase(
+    DATABASE['name'],
+    user=DATABASE['user'],
+    password=DATABASE['password'],
+    host=DATABASE['host'],
+    port=DATABASE['port']
+)
+
+class BaseModel(Model):
+    class Meta:
+        database = db
 
 # Books Table
-class Book(db.Model):
-    __tablename__ = 'books'
-
-    book_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(255), nullable=False)
-    author = db.Column(db.String(255), nullable=False)
-    isbn = db.Column(db.String(20), unique=True, nullable=True)
-    publisher = db.Column(db.String(255), nullable=True)
-    page_count = db.Column(db.Integer, nullable=True)
-    category = db.Column(db.String(100), nullable=True)
-    total_copies = db.Column(db.Integer, default=1, nullable=False)
-    available_copies = db.Column(db.Integer, default=1, nullable=False)
-    added_on = db.Column(db.TIMESTAMP, default=datetime.utcnow, nullable=False)
-    updated_on = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+class Book(BaseModel):
+    book_id = AutoField(primary_key=True)
+    title = CharField(max_length=255, null=False)
+    author = CharField(max_length=255, null=False)
+    isbn = CharField(max_length=20, unique=True, null=True)
+    publisher = CharField(max_length=255, null=True)
+    page_count = IntegerField(null=True)
+    category = CharField(max_length=100, null=True)
+    total_copies = IntegerField(default=1, null=False)
+    available_copies = IntegerField(default=1, null=False)
+    added_on = DateTimeField(default=datetime.utcnow, null=False)
+    updated_on = DateTimeField(default=datetime.utcnow, null=False)
 
 # Members Table
-class Member(db.Model):
-    __tablename__ = 'members'
-
-    member_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    first_name = db.Column(db.String(100), nullable=False)
-    last_name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(255), unique=True, nullable=False)
-    phone = db.Column(db.String(15), unique=True, nullable=False)
-    address = db.Column(db.Text, nullable=True)
-    membership_date = db.Column(db.TIMESTAMP, default=datetime.utcnow, nullable=False)
-    membership_type = db.Column(db.Enum('Standard', 'Premium', name='membership_type_enum'), default='Standard', nullable=False)
-    is_active = db.Column(db.Boolean, default=True, nullable=False)
-    fine_due = db.Column(db.Numeric(10, 2), default=0.00, nullable=False)
-    last_updated = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+class Member(BaseModel):
+    member_id = AutoField(primary_key=True)
+    first_name = CharField(max_length=100, null=False)
+    last_name = CharField(max_length=100, null=False)
+    email = CharField(max_length=255, unique=True, null=False)
+    phone = CharField(max_length=15, unique=True, null=False)
+    address = TextField(null=True)
+    membership_date = DateTimeField(default=datetime.utcnow, null=False)
+    membership_type = CharField(choices=[('Standard', 'Standard'), ('Premium', 'Premium')], default='Standard', null=False)
+    is_active = BooleanField(default=True, null=False)
+    fine_due = DecimalField(max_digits=10, decimal_places=2, default=0.00, null=False)
+    last_updated = DateTimeField(default=datetime.utcnow, null=False)
 
 # Transactions Table
-class Transaction(db.Model):
-    __tablename__ = 'transactions'
+class Transaction(BaseModel):
+    transaction_id = AutoField(primary_key=True)
+    book_id = ForeignKeyField(Book, backref='transactions', on_delete='CASCADE')
+    member_id = ForeignKeyField(Member, backref='transactions', on_delete='CASCADE')
+    issue_date = DateTimeField(default=datetime.utcnow, null=False)
+    due_date = DateTimeField(null=False)
+    return_date = DateTimeField(null=True)
+    fine_amount = DecimalField(max_digits=10, decimal_places=2, default=0.00, null=False)
+    payment_status = CharField(choices=[('Paid', 'Paid'), ('Pending', 'Pending')], default='Pending', null=False)
+    status = CharField(choices=[('Issued', 'Issued'), ('Returned', 'Returned'), ('Overdue', 'Overdue')], default='Issued', null=False)
 
-    transaction_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    book_id = db.Column(db.Integer, db.ForeignKey('books.book_id', ondelete='CASCADE'), nullable=False)
-    member_id = db.Column(db.Integer, db.ForeignKey('members.member_id', ondelete='CASCADE'), nullable=False)
-    issue_date = db.Column(db.TIMESTAMP, default=datetime.utcnow, nullable=False)
-    due_date = db.Column(db.TIMESTAMP, nullable=False)
-    return_date = db.Column(db.TIMESTAMP, nullable=True)
-    fine_amount = db.Column(db.Numeric(10, 2), default=0.00, nullable=False)
-    payment_status = db.Column(db.Enum('Paid', 'Pending', name='payment_status_enum'), default='Pending', nullable=False)
-    status = db.Column(db.Enum('Issued', 'Returned', 'Overdue', name='status_enum'), default='Issued', nullable=False)
+# Database Initialization
+def initialize_db():
+    db.connect()
+    db.create_tables([Book, Member, Transaction], safe=True)
+    db.close()
 
-    # Relationships
-    book = db.relationship('Book', backref=db.backref('transactions', lazy=True, cascade='all, delete'))
-    member = db.relationship('Member', backref=db.backref('transactions', lazy=True, cascade='all, delete'))
+# Example Usage
+if __name__ == "__main__":
+    initialize_db()
+    print("Database initialized and tables created.")
