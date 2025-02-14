@@ -1,5 +1,4 @@
 
-
 from flask import render_template, request, redirect, url_for, flash
 from flask import Flask, jsonify
 from models import db, Book, Member, Transaction, initialize_db
@@ -8,17 +7,7 @@ from datetime import datetime
 
 
 app = Flask(__name__)
-
-# PostgreSQL Database Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:admin@localhost/library'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Initialize the database with the app
-init_app(app)
-
-@app.route("/")
-def index():
-    return "Home Page"
+initialize_db()
 
 if __name__ == '__main__':
     app.run(debug=True)
