@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4" style="color: #5a3e2b; font-family: 'Playfair Display', serif;">Add a New Book</h2>
+    <div class="card p-4 shadow-lg" style="background: #f5e3c3; border-radius: 15px; max-height: 80vh; overflow-y: auto;">
+        <form action="/new-book" method="POST">
+            <div class="mb-3">
+                <label for="title" class="form-label">Book Title</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Enter book title" required>
+            </div>
+            <div class="mb-3">
+                <label for="author" class="form-label">Author</label>
+                <input type="text" class="form-control" id="author" name="author" placeholder="Enter author's name" required>
+            </div>
+            <div class="mb-3">
+                <label for="isbn" class="form-label">ISBN</label>
+                <input type="text" class="form-control" id="isbn" name="isbn" placeholder="Enter ISBN">
+            </div>
+            <div class="mb-3">
+                <label for="publisher" class="form-label">Publisher</label>
+                <input type="text" class="form-control" id="publisher" name="publisher" placeholder="Enter publisher">
+            </div>
+            <div class="mb-3">
+                <label for="page_count" class="form-label">Page Count</label>
+                <input type="number" class="form-control" id="page_count" name="page_count" placeholder="Enter total pages">
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <input type="text" class="form-control" id="category" name="category" placeholder="Enter category">
+            </div>
+            <div class="mb-3">
+                <label for="total_copies" class="form-label">Total Copies</label>
+                <input type="number" class="form-control" id="total_copies" name="total_copies" placeholder="Enter number of copies" required>
+            </div>
+            <!-- Center the Add Book button -->
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-dark w-50" style="background: #8b5e3c; border: none;">Add Book</button>
+            </div>
+        </form>
+        <!-- Add "OR" row -->
+        <div class="text-center my-3">
+            <strong>OR</strong>
+        </div>
+        <!-- Center the Import Books button -->
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-secondary w-50" style="background: #6c757d; border: none;" data-bs-toggle="modal" data-bs-target="#importModal">Import Books</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importModalLabel">Import Books</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/import-books" method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="import_title" class="form-label">Book Title </label>
+                        <input type="text" class="form-control" id="import_title" name="title" placeholder="Enter book title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="import_page" class="form-label">Page Number</label>
+                        <input type="number" class="form-control" id="import_page" name="page" placeholder="Enter page number">
+                    </div>
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Author</label>
+                        <input type="text" class="form-control" id="author" name="author" placeholder="Enter author">
+                    </div>
+                    <div class="mb-3">
+                        <label for="import_num_books" class="form-label">Number of Books</label>
+                        <input type="number" class="form-control" id="import_num_books" name="num_books" placeholder="Enter number of books to import">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-dark">Import</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    html, body {
+        height: 100%;
+        overflow-y: auto;
+    }
+</style>
+
+{% endblock %}
