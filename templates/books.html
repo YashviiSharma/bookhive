@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4" style="color: #5a3e2b; font-family: 'Playfair Display', serif;">Book Genres</h2>
+
+    <!-- Search Bar -->
+    <div class="mb-3">
+        <input type="text" id="search" class="form-control" placeholder="Search genres..." onkeyup="filterGenres()">
+    </div>
+
+    <!-- Genre Cards -->
+    <div class="row" id="genreContainer">
+        {% for genre, img_link in genres.items() %}
+        <div class="col-md-4 mb-4 genre-card">
+            <div class="card shadow-lg text-center genre-box" onclick="selectGenre('{{ genre }}')">
+                <div class="image-container">
+                    <img src="{{ img_link }}" alt="{{ genre }}" class="genre-image">
+                    <div class="genre-overlay">
+                        <h5 class="card-title">{{ genre }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Search & Genre Selection Scripts -->
+<script>
+    function filterGenres() {
+        let input = document.getElementById("search").value.toLowerCase();
+        let cards = document.querySelectorAll(".genre-card");
+
+        cards.forEach(card => {
+            let genre = card.textContent.toLowerCase();
+            card.style.display = genre.includes(input) ? "block" : "none";
+        });
+    }
+
+    function selectGenre(genre) {
+        // Redirect to book listings page for that genre (optional)
+        window.location.href = `/books/${genre.toLowerCase()}`;
+    }
+</script>
+
+<style>
+    .genre-box {
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .genre-box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .image-container {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+    }
+
+    .genre-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: blur(3px);  /* Reduced blur */
+        transition: filter 0.3s ease;
+    }
+
+    .genre-box:hover .genre-image {
+        filter: blur(1px);  /* Less blur on hover */
+    }
+
+    .genre-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+</style>
+
+{% endblock %}

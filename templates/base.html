@@ -30,14 +30,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="/books">Books</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/contact">Contact Info</a></li>
-                    <li class="nav-item">
-                        {% if user %}
-                            <a class="nav-link" href="/my-books">My Books</a>
-                        {% else %}
-                            <a class="nav-link" href="/login">My Books</a>
-                        {% endif %}
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/new-book">Add a New Book</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('new_member') }}">Add Member</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/list-member">View Existing Member</a></li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="bookhiveFor" role="button" data-bs-toggle="dropdown" aria-expanded="false">BookHive For</a>
                         <ul class="dropdown-menu" aria-labelledby="bookhiveFor">
@@ -47,10 +43,6 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search books..." aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
                 <a href="/login" class="btn btn-primary ms-2">Login</a>
                 <a href="/signup" class="btn btn-outline-primary ms-2">Sign Up</a>
             </div>

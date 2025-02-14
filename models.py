@@ -1,3 +1,4 @@
+
 import os
 from peewee import Model, PostgresqlDatabase, CharField, IntegerField, TextField, BooleanField, DecimalField, AutoField, ForeignKeyField, DateTimeField
 from datetime import datetime
@@ -49,10 +50,10 @@ class Member(BaseModel):
     phone = CharField(max_length=15, unique=True, null=False)
     address = TextField(null=True)
     membership_date = DateTimeField(default=datetime.utcnow, null=False)
-    membership_type = CharField(choices=[('Standard', 'Standard'), ('Premium', 'Premium')], default='Standard', null=False)
-    is_active = BooleanField(default=True, null=False)
-    fine_due = DecimalField(max_digits=10, decimal_places=2, default=0.00, null=False)
-    last_updated = DateTimeField(default=datetime.utcnow, null=False)
+    membership_type = CharField(choices=[('Standard', 'Standard'), ('Premium', 'Premium')], default='Standard', null=True)
+    is_active = BooleanField(default=True, null=True)
+    fine_due = DecimalField(max_digits=10, decimal_places=2, default=0.00, null=True)
+    last_updated = DateTimeField(default=datetime.utcnow, null=True)
 
 # Transactions Table
 class Transaction(BaseModel):
