@@ -37,6 +37,9 @@ Screenshots
 1️⃣ Home Page
 
     Displays total books and members in the system.
+![home1](https://github.com/user-attachments/assets/d500a585-afdc-44ac-b477-ea7ff6498fa9)
+![home2](https://github.com/user-attachments/assets/85176765-970f-44e0-8959-757f9b29b5bc)
+![home3](https://github.com/user-attachments/assets/fcdf87de-a4dc-40e8-b5f8-5d5531684e6b)
 
 
 2️⃣ Add a New Member
