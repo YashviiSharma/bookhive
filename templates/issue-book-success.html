@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Book Success</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; /* Full height of the viewport */
+            margin: 0; /* Remove default margin */
+            background-color: #f4f4f4; /* Optional: background color for the page */
+        }
+    
+        .card { 
+            width: 400px; 
+            padding: 20px; 
+            border: 2px solid #5a3e2b; 
+            border-radius: 15px; 
+            text-align: center; /* Center the text inside the card */
+            background-color: white; /* Optional: background color for the card */
+        }
+    
+        .btn { 
+            padding: 10px 20px; 
+            background-color: #5a3e2b; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer;
+            font-size: 16px;
+        }
+    
+        .btn:hover { 
+            background-color: #3c2a1b; 
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="card">
+        <h2>Book Issued Successfully</h2>
+        <p>Books have been successfully issued to the member.</p>
+
+        <h3>Member Details</h3>
+        <p><strong>Member ID:</strong> {{ member_id }}</p>
+        <p><strong>Member Name:</strong> {{ member.first_name }} {{ member.last_name }}</p>
+
+        <!-- Add the Generate ID Card Button -->
+        <br><br>
+        <a href="{{ url_for('download_id_card', member_id=member_id) }}">
+            <button class="btn">Generate ID Card</button>
+        </a>
+        
+    </div>
+</body>
+</html>
+
