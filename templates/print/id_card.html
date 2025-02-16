@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library ID Card</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .card { width: 400px; padding: 20px; border: 2px solid #5a3e2b; border-radius: 15px; margin: auto; }
+        h2 { color: #5a3e2b; }
+        .details { text-align: left; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #5a3e2b; padding: 8px; text-align: left; }
+        th { background: #e4c9a2; }
+        .fine-note { margin-top: 10px; font-style: italic; color: red; }
+        .rent-fee { margin-top: 15px; font-size: 16px; color: #5a3e2b; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Library ID Card</h2>
+        <div class="details">
+            <p><strong>Member ID:</strong> {{ member.member_id }}</p>
+            <p><strong>Name:</strong> {{ member.first_name }} {{ member.last_name }}</p>
+            <p><strong>Phone:</strong> {{ member.phone }}</p>
+            <p><strong>Email:</strong> {{ member.email }}</p>
+        </div>
+
+        <h3>Issued Books</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Book ID</th>
+                    <th>Title</th>
+                    <th>ISBN</th>
+                    <th>Due Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.book_id }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.due_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p class="fine-note">* If the due date exceeds, a fine of ₹5 per day will be applied.</p>
+
+        <!-- Rent Fee Information -->
+        <p class="rent-fee"><strong>Total Rent Fee:</strong> ₹{{ rent_fee }}</p>
+    </div>
+</body>
+</html>

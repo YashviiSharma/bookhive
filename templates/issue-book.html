@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4" style="color: #5a3e2b; font-family: 'Playfair Display', serif;">Issue a Book</h2>
+    <div class="card p-4 shadow-lg" style="background: #f5e3c3; border-radius: 15px;">
+        <form action="{{ url_for('issue_book') }}" method="POST">
+            <div class="mb-3">
+                <label for="member_id" class="form-label">Member ID</label>
+                <input type="number" class="form-control" id="member_id" name="member_id" required>
+            </div>
+
+            <!-- Member Details Section -->
+            <div class="mb-3 p-3 rounded" style="background: #e4c9a2;">
+                <h5 class="mb-3" style="color: #5a3e2b;">Member Details</h5>
+                <p><strong>Name:</strong> <span id="member_name"></span></p>
+                <p><strong>Email:</strong> <span id="member_email"></span></p>
+                <p><strong>Address:</strong> <span id="member_address"></span></p>
+                <p><strong>Phone:</strong> <span id="member_phone"></span></p>
+            </div>
+
+            <div class="mb-3">
+                <label for="due_date" class="form-label">Due Date</label>
+                <input type="date" class="form-control" id="due_date" name="due_date" required>
+            </div>
+
+            <!-- Books Table -->
+            <div class="mb-3">
+                <h5 style="color: #5a3e2b;">Books</h5>
+                <table class="table table-bordered" style="background: #faebd7;">
+                    <thead class="text-center" style="background: #8b5e3c; color: white;">
+                        <tr>
+                            <th>Book ID</th>
+                            <th>Title</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookContainer">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Add Book Button -->
+            <div class="d-flex justify-content-center">
+                <button id="add-book-button" class="btn btn-secondary w-50" style="background: #6c757d; border: none;">Add Book</button>
+            </div>
+
+            <!-- Issue Book Button -->
+            <div class="d-flex justify-content-center mt-3">
+                <button type="submit" class="btn btn-dark w-50" style="background: #8b5e3c; border: none;">Issue Book</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Fetch Member Details on Member ID Blur
+    document.getElementById('member_id').addEventListener('blur', function() {
+        let memberId = this.value;
+        if (memberId) {
+            fetch(`/get-member/${memberId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        document.getElementById('member_name').innerText = data.first_name;
+                        document.getElementById('member_email').innerText = data.email;
+                        document.getElementById('member_address').innerText = data.address;
+                        document.getElementById('member_phone').innerText = data.phone;
+                    }
+                });
+        }
+    });
+
+    // Add Book with Remove Button
+    document.getElementById('add-book-button').addEventListener('click', function(event) {
+        event.preventDefault();
+        let bookId = prompt("Enter Book ID:");
+        if (bookId) {
+            fetch(`/get-book/${bookId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        let bookContainer = document.getElementById('bookContainer');
+                        
+                        // Check if the book already exists in the list
+                        if (document.querySelector(`[data-book-id="${bookId}"]`)) {
+                            alert("This book is already added!");
+                            return;
+                        }
+
+                        let newRow = document.createElement('tr');
+                        newRow.setAttribute('data-book-id', bookId);
+                        newRow.innerHTML = `
+                            <td><input type="hidden" name="book_id[]" value="${bookId}">${bookId}</td>
+                            <td>${data.title}</td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-danger btn-sm remove-book">Remove</button>
+                            </td>
+                        `;
+
+                        bookContainer.appendChild(newRow);
+                    }
+                });
+        }
+    });
+
+    // Remove Book Entry
+    document.getElementById('bookContainer').addEventListener('click', function(event) {
+        if (event.target.classList.contains('remove-book')) {
+            event.target.closest('tr').remove();
+        }
+    });
+</script>
+
+{% endblock %}
+

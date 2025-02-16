@@ -6,17 +6,34 @@
         {{ genre|capitalize }} Books
     </h2>
 
+    <!-- Search and Rating Filter -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <input type="text" id="search" class="form-control" placeholder="Search by title or author..." onkeyup="filterBooks()">
+        </div>
+        <div class="col-md-6">
+            <select id="ratingFilter" class="form-control" onchange="filterBooks()">
+                <option value="">Filter by Rating</option>
+                <option value="5">⭐ 5 Stars</option>
+                <option value="4">⭐ 4+ Stars</option>
+                <option value="3">⭐ 3+ Stars</option>
+                <option value="2">⭐ 2+ Stars</option>
+                <option value="1">⭐ 1+ Stars</option>
+            </select>
+        </div>
+    </div>
+
     <!-- Book List -->
-    <div class="row">
+    <div class="row" id="bookContainer">
         {% for book in books %}
-        <div class="col-md-4 mb-4">
-            <div class="card shadow-lg book-card">
+        <div class="col-md-4 mb-4 book-card" data-rating="{{ book.rating }}">
+            <div class="card shadow-lg">
                 <img src="{{ book.image_url }}" alt="{{ book.title }}" class="book-image">
                 <div class="card-body text-center">
                     <h5 class="card-title">{{ book.title }}</h5>
                     <p class="text-muted">By {{ book.author }}</p>
                     <p>⭐ {{ book.rating }}/5</p>
-                    <button class="btn btn-primary">View Details</button>
+                    <p>{{ book.isbn }}</p>
                 </div>
             </div>
         </div>
@@ -24,12 +41,28 @@
     </div>
 </div>
 
-<!-- Genre Selection Script -->
+<!-- JavaScript for Filtering -->
 <script>
-    function selectGenre(genre) {
-    window.location.href = `/books/${encodeURIComponent(genre.toLowerCase())}`;
-}
+    function filterBooks() {
+        let searchInput = document.getElementById("search").value.toLowerCase();
+        let ratingFilter = document.getElementById("ratingFilter").value;
+        let books = document.querySelectorAll(".book-card");
 
+        books.forEach(book => {
+            let title = book.querySelector(".card-title").innerText.toLowerCase();
+            let author = book.querySelector(".text-muted").innerText.toLowerCase();
+            let rating = parseFloat(book.getAttribute("data-rating"));
+
+            let matchesSearch = title.includes(searchInput) || author.includes(searchInput);
+            let matchesRating = ratingFilter === "" || rating >= parseFloat(ratingFilter);
+
+            if (matchesSearch && matchesRating) {
+                book.style.display = "block";
+            } else {
+                book.style.display = "none";
+            }
+        });
+    }
 </script>
 
 <style>
@@ -51,4 +84,3 @@
     }
 </style>
 {% endblock %}
-

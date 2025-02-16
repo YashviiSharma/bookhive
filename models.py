@@ -1,6 +1,6 @@
 
 import os
-from peewee import Model, PostgresqlDatabase, CharField, IntegerField, TextField, BooleanField, DecimalField, AutoField, ForeignKeyField, DateTimeField
+from peewee import Model, PostgresqlDatabase, CharField, IntegerField, TextField, BooleanField, DecimalField, AutoField, ForeignKeyField, DateTimeField, Check
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -40,6 +40,8 @@ class Book(BaseModel):
     available_copies = IntegerField(default=1, null=False)
     added_on = DateTimeField(default=datetime.utcnow, null=False)
     updated_on = DateTimeField(default=datetime.utcnow, null=False)
+    rating = IntegerField(null=False, constraints=[Check('rating BETWEEN 1 AND 5')])  
+    image_url = CharField(null=True)  
 
 # Members Table
 class Member(BaseModel):
