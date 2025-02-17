@@ -62,7 +62,7 @@ Frontend
 
 HTML, CSS (Bootstrap) - Responsive UI.
 
-JavaScript (Fetch API) - Client-side API calls.
+JavaScript  - For additional ui functionality
 
 Additional Features
 
@@ -140,7 +140,11 @@ Screenshots
 
 
        edit functionality
-       ![editbook](https://github.com/user-attachments/assets/bbcdc12e-cd7c-47d5-bf27-6e6c27bbfbf5)
+   ![image](https://github.com/user-attachments/assets/a3c06c4e-6dba-4dfe-be32-c42aee49739a)
+       updated quantity in book list
+   ![image](https://github.com/user-attachments/assets/d41755c3-c038-458a-a174-b6dd251bd43d)
+
+
 
 
 4.Importing a book
@@ -181,4 +185,8 @@ Screenshots
     Printable ID card generation feature.
    As the user librarian clicks on generate id card , all details of user , with rental fee and book details will be visible
    ![generateId](https://github.com/user-attachments/assets/abd62129-51a8-4694-8f7d-60db265b507c)
+
+   if the due date is already passed then a fine of 5rs will be charged per day
+   ![image](https://github.com/user-attachments/assets/41ff795d-29ba-4ced-b942-7103afbe13fc)
+
 
