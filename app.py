@@ -1,6 +1,6 @@
 
 from flask import render_template, request, redirect, url_for, flash, make_response
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Response
 from models import db, Book, Member, Transaction, initialize_db
 from peewee import IntegrityError, fn
 from datetime import datetime
@@ -8,6 +8,8 @@ from weasyprint import HTML
 import os
 import requests
 from urllib.parse import urlencode
+import csv
+from io import StringIO
 
 app = Flask(__name__)
 initialize_db()
@@ -478,3 +480,23 @@ def return_book(transaction_id):
 def list_issued_books():
     issued_books = Transaction.select().where(Transaction.status == 'Issued')
     return render_template('issued-books.html', issued_books=issued_books)
+
+
+@app.route('/download-csv', methods=['GET'])
+def download_csv():
+    books = Book.select()  
+
+    output = StringIO()
+    writer = csv.writer(output)
+
+    writer.writerow(["Book Title", "Author", "Available Quantity"])
+
+    for book in books:
+        writer.writerow([book.title, book.author, book.available_copies])
+
+    output.seek(0)
+
+    response = Response(output.getvalue(), mimetype="text/csv")
+    response.headers["Content-Disposition"] = "attachment; filename=library_books.csv"
+    
+    return response
