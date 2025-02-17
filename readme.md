@@ -140,7 +140,8 @@ Screenshots
 
 
        edit functionality
-   ![image](https://github.com/user-attachments/assets/a3c06c4e-6dba-4dfe-be32-c42aee49739a)
+  ![image](https://github.com/user-attachments/assets/72491e2c-6293-44ac-b530-39e58784f241)
+
        updated quantity in book list
    ![image](https://github.com/user-attachments/assets/d41755c3-c038-458a-a174-b6dd251bd43d)
 
