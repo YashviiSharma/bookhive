@@ -106,7 +106,7 @@ Korecent Solutions Pvt Ltd
 Screenshots
 1. Home Page
 
-    Displays total books and members in the system.In the to we can see the navbar which consist of mostly all the operations this application do
+    Displays total books and members in the system.In the below image we can see the navbar which consist of mostly all the operations this application do
     ![home1](https://github.com/user-attachments/assets/d500a585-afdc-44ac-b477-ea7ff6498fa9)
    In this section we can see the total members currently in our system , total books , and the monthly growth is currently hardcoded(will improvise later)
     ![home2](https://github.com/user-attachments/assets/85176765-970f-44e0-8959-757f9b29b5bc)
@@ -132,12 +132,16 @@ Screenshots
 
 4. Add a new Book
        Librarians can add books with details like title, author, ISBN, etc.
+       ![addbook](https://github.com/user-attachments/assets/caac34e1-0040-4250-8eb4-1b58328c49ff)
+
        
        on addition we can see the booklist , that will have title of book , quantity of that book and some actions like edit and delete
-       ![booklist](https://github.com/user-attachments/assets/ffed1703-4a7a-4743-8ce9-5e504312048d)
+      ![booklist](https://github.com/user-attachments/assets/6c9c32bc-3fbb-4800-98e9-969a6a12a713)
+
 
        edit functionality
-       ![editbook](https://github.com/user-attachments/assets/4c55bed0-f597-42bb-a027-97d53433a938)
+       ![editbook](https://github.com/user-attachments/assets/bbcdc12e-cd7c-47d5-bf27-6e6c27bbfbf5)
+
 
 4.Importing a book
     we can import a book also by specifying anything like - title of book , author , isbn etc
@@ -168,7 +172,7 @@ Screenshots
     and the librarian will give id of book which will fetcch book name
    ![issuebook](https://github.com/user-attachments/assets/b3ccd4b3-bcb8-40fd-a03b-e3d95d358796)
 
-   after successfully issuing the book book issued successfully with member details and a button to generate id will be visible
+   after successfully issuing the book , the book issued successfully page with member details and a button to generate id will be visible
    ![issueSuccess](https://github.com/user-attachments/assets/a4ad1ffb-374e-4a78-99a7-ca6848867579)
 
 
