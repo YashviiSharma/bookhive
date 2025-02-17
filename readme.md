@@ -85,8 +85,6 @@ Installation & Setup
 
 4. Run the Application
 
-    python app.py
-
 The application will run on http://127.0.0.1:5000/
 
 API Endpoints
