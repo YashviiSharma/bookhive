@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="color: #5a3e2b; font-family: 'Playfair Display', serif;">
+        Issued Books
+    </h2>
+    <div class="card p-4 shadow-lg" style="background: #f5e3c3; border-radius: 15px;">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-header">
+                        <th scope="col">Book Title</th>
+                        <th scope="col">Member Name</th>
+                        <th scope="col">Issue Date</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Available Copies</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in issued_books %}
+                    <tr>
+                        <td>{{ transaction.book_id.title }}</td>
+                        <td>{{ transaction.member_id.first_name }} {{ transaction.member_id.last_name }}</td>
+                        <td>{{ transaction.issue_date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ transaction.due_date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ transaction.book_id.available_copies }}</td>
+                        <td>{{ transaction.status }}</td>
+                        <td>
+                            {% if transaction.status == 'Issued' %}
+                                <form action="{{ url_for('return_book', transaction_id=transaction.transaction_id) }}" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-dark">Return</button>
+                                </form>
+                            {% else %}
+                                <span class="badge bg-success">Returned</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table-header {
+        background-color: #8b5e3c;
+        color: white;
+    }
+    .btn-dark {
+        background-color: #8b5e3c;
+        border: none;
+    }
+    .btn-dark:hover {
+        background-color: #653f29;
+    }
+</style>
+{% endblock %}

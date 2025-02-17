@@ -449,3 +449,32 @@ def download_id_card(member_id):
     except Exception as e:
         return f"Error: {str(e)}", 500
 
+
+@app.route('/return-book/<int:transaction_id>', methods=['POST'])
+def return_book(transaction_id):
+    transaction = Transaction.get_or_none(Transaction.transaction_id == transaction_id)
+
+    if not transaction:
+        flash("Transaction not found!", "danger")
+        return redirect(url_for('list_issued_books'))
+
+    if transaction.status == 'Returned':
+        flash("This book has already been returned.", "warning")
+        return redirect(url_for('list_issued_books'))
+
+   
+    book = transaction.book_id 
+    book.available_copies = fn.GREATEST(book.available_copies + 1, 0)  
+    book.save()
+
+    transaction.return_date = datetime.utcnow()
+    transaction.status = 'Returned'
+    transaction.save()
+
+    flash(f"Book '{book.title}' returned successfully!", "success")
+    return redirect(url_for('list_issued_books'))
+
+@app.route('/issued-books')
+def list_issued_books():
+    issued_books = Transaction.select().where(Transaction.status == 'Issued')
+    return render_template('issued-books.html', issued_books=issued_books)
