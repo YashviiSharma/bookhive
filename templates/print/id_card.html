@@ -52,6 +52,9 @@
 
         <!-- Rent Fee Information -->
         <p class="rent-fee"><strong>Total Rent Fee:</strong> ₹{{ rent_fee }}</p>
+        <p class="rent-fee"><strong>Total fine Fee:</strong> ₹{{ member.fine_due }}</p>
+        <p class="rent-fee"><strong>Total amount to pay:</strong> ₹{{ member.fine_due + rent_fee}}</p>
+
     </div>
 </body>
 </html>
