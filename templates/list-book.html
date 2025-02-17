@@ -108,6 +108,14 @@
                     {% endfor %}
                     </tbody>
                 </table>
+
+                <!-- Buttons inside the card -->
+                <div class="text-center mt-3">
+                    <a href="/new-book" class="btn btn-dark">Add a New Book</a>
+                    <a href="{{ url_for('download_csv') }}" class="btn btn-dark" style="background-color: #28a745; color: white;">
+                        📥 Download CSV
+                    </a>
+                </div>
             </div>
         {% else %}
             <!-- No Books Message -->
@@ -115,11 +123,6 @@
                 No books available.
             </div>
         {% endif %}
-
-        <!-- Add Book Button -->
-        <div class="text-center mt-4">
-            <a href="/new-book" class="btn btn-dark">Add a New Book</a>
-        </div>
     </div>
 
     <!-- Bootstrap JS -->
@@ -128,3 +131,4 @@
 </html>
 
 {% endblock %}
+
