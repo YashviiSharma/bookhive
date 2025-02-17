@@ -329,7 +329,7 @@ def issue_book():
         member = Member.get_by_id(member_id)
 
 
-        fine_due = member.fine_due
+        fine_due = int(member.fine_due)
 
         if fine_due >= 500:
             return "Member has an outstanding debt of Rs. 500 or more. Cannot issue books.", 400
@@ -370,7 +370,7 @@ def issue_book():
         else:
             member.fine_due += total_late_fine
 
-
+        
         member.save()
 
 
