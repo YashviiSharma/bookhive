@@ -1,107 +1,80 @@
-##Library Management System
+# Library Management System
 
-Overview
+## Overview
+The **Library Management System** is a web-based application designed to help librarians efficiently manage books and members. The system provides functionalities for book issuance, member management, and book tracking, ensuring smooth operation of a library.
 
-The Library Management System is a web-based application designed to help librarians efficiently manage books and members. The system provides functionalities for book issuance, member management, and book tracking, ensuring smooth operation of a library.
+## Features
 
-Features
+### 1. Member Management
+- Add, edit, delete, and list members.
+- Generate ID cards for members.
+- Fetch member details dynamically.
+- Manage outstanding fines and overdue books.
 
-1. Member Management
+### 2. Book Management
+- Add, edit, delete, and list books.
+- Import books from the **Frappe Library API**.
+- Organize books by categories such as *Fiction, Sci-Fi, Horror*, etc.
+- Store book details including *title, author, ISBN, publisher, page count, and rating*.
+- Update book availability dynamically based on transactions.
 
-Add, edit, delete, and list members.
+### 3. Book Issuing System
+- Issue books to members.
+- Set due dates and calculate fines automatically.
+- Prevent book issuance if a member's fine exceeds **₹500**.
+- Fetch book details dynamically by **ISBN**.
+- Track issued books for each member.
 
-Generate ID cards for members.
+### 4. Transactions & Reporting
+- View issued books per member.
+- Calculate overdue fines dynamically (**Fine: ₹5 per day for late returns**).
+- Generate and download printable ID cards with member details and issued books.
+- Track rent fees per book issued.
 
-Fetch member details dynamically.
+## Tech Stack
 
-Manage outstanding fines and overdue books.
+### Backend
+- **Flask (Python)** - Lightweight web framework.
+- **PostgreSQL** - Database management using **Peewee ORM**.
 
-2. Book Management
+### Frontend
+- **HTML, CSS (Bootstrap)** - Responsive UI.
+- **JavaScript** - For additional UI functionality.
 
-Add, edit, delete, and list books.
+### Additional Features
+- **PDF Generation**: ID cards are generated using *WeasyPrint*.
+- **External API Integration**: Books can be imported from the *Frappe Library API*.
 
-Import books from the Frappe Library API.
+## Installation & Setup
 
-Organize books by categories such as Fiction, Sci-Fi, Horror, etc.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/YashviiSharma/bookhive
+cd library-management-system
+```
 
-Store book details including title, author, ISBN, publisher, page count, and rating.
+### 2. Install Dependencies
+pip install -r requirements.txt
 
-Update book availability dynamically based on transactions.
+### 3. Initialize Database
+Run the database initialization script (if applicable).
 
-3. Book Issuing System
+### 4. Run the Application
+flask run
 
-Issue books to members.
+The application will run on **http://127.0.0.1:5000/**
 
-Set due dates and calculate fines automatically.
+## API Endpoints
+![API Endpoints Screenshot](https://github.com/user-attachments/assets/66aaf1af-787f-445b-8784-26af496d03ed)
 
-Prevent book issuance if a member's fine exceeds ₹500.
+## Future Enhancements
+- **Email Notifications** for due date reminders.
+- **Admin Panel** with user authentication.
 
-Fetch book details dynamically by ISBN.
+## Contributors
+- **Yashvi and Ritika**
+- **Korecent Solutions Pvt Ltd**
 
-Track issued books for each member.
-
-4. Transactions & Reporting
-
-View issued books per member.
-
-Calculate overdue fines dynamically (Fine: ₹5 per day for late returns).
-
-Generate and download printable ID cards with member details and issued books.
-
-Track rent fees per book issued.
-
-Tech Stack
-
-Backend
-
-Flask (Python) - Lightweight web framework.
-
-PostgreSql - Database management using Peewee ORM.
-
-Frontend
-
-HTML, CSS (Bootstrap) - Responsive UI.
-
-JavaScript  - For additional ui functionality
-
-Additional Features
-
-PDF Generation: ID cards are generated using WeasyPrint.
-
-External API Integration: Books can be imported from the Frappe Library API.
-
-Installation & Setup
-
-1. Clone the Repository
-
-    git clone https://github.com/your-repository/library-management-system.git
-    cd library-management-system
-
-2. Install Dependencies
-
-    pip install -r requirements.txt
-
-3. Initialize Database
-
-4. Run the Application
-
-The application will run on http://127.0.0.1:5000/
-
-API Endpoints
-![Screenshot from 2025-02-17 10-15-22](https://github.com/user-attachments/assets/66aaf1af-787f-445b-8784-26af496d03ed)
-
-
-Future Enhancements
-
-Email Notifications for due date reminders.
-
-Admin Panel with user authentication.
-
-Contributors
-
-Yashvi and Ritika
-
-Korecent Solutions Pvt Ltd
 
 Screenshots
 1. Home Page
