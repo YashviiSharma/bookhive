@@ -48,7 +48,7 @@ def new_member():
         except Exception as e:
             flash(f"Error: {str(e)}", "danger")
 
-    return render_template('new-member.html')
+    return render_template('memberTemplates/new-member.html')
 
 
 @app.route('/list-member')
