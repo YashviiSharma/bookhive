@@ -10,7 +10,7 @@ app.register_blueprint(bookbp)
 # app.register_blueprint(tbp)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
 
 app.secret_key = 'x/x/x/x/x/x/x/x/x/x/x/x/x//s//s/s/s/s/s/'
 @app.route('/')
