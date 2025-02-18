@@ -31,11 +31,9 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('book.books') }}">Books</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('book.add_book') }}">Add a New Book</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('book.list_books') }}">List of Books</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('members.new_member') }}">Add Member</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('members.list_member') }}">View Existing Member</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('transaction.issue_book') }}">Issue Book</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('book.list_books') }}">List of Books</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('transaction.list_issued_books') }}">Issued Books</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="bookhiveFor" role="button" data-bs-toggle="dropdown" aria-expanded="false">BookHive For</a>
                         <ul class="dropdown-menu" aria-labelledby="bookhiveFor">
@@ -50,7 +48,7 @@
             </div>
         </div>
     </nav>
-    
+
     <div class="container mt-4">
         {% block content %}{% endblock %}
     </div>
