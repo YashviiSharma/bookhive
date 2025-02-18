@@ -4,7 +4,7 @@
 <div class="container mt-5 mb-5">
     <h2 class="text-center mb-4" style="color: #5a3e2b; font-family: 'Playfair Display', serif;">Issue a Book</h2>
     <div class="card p-4 shadow-lg" style="background: #f5e3c3; border-radius: 15px;">
-        <form action="{{ url_for('issue_book') }}" method="POST">
+        <form action="/transaction/issue-book" method="POST">
             <div class="mb-3">
                 <label for="member_id" class="form-label">Member ID</label>
                 <input type="number" class="form-control" id="member_id" name="member_id" required>
