@@ -4,7 +4,7 @@
 <div class="container mt-5 mb-5">
     <h2 class="text-center mb-4" style="color: #5a3e2b; font-family: 'Playfair Display', serif;">Add a New Book</h2>
     <div class="card p-4 shadow-lg" style="background: #f5e3c3; border-radius: 15px; max-height: 80vh; overflow-y: auto;">
-        <form action="/new-book" method="POST">
+        <form action="/book/new-book" method="POST">
             <div class="mb-3">
                 <label for="title" class="form-label">Book Title</label>
                 <input type="text" class="form-control" id="title" name="title" placeholder="Enter book title" required>
@@ -78,7 +78,7 @@
                 <h5 class="modal-title" id="importModalLabel">Import Books</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/import-books" method="POST">
+            <form action="/book/import-books" method="POST">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="import_title" class="form-label">Book Title </label>

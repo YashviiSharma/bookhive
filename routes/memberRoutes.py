@@ -32,7 +32,7 @@ def handle_new_member():
         return redirect(url_for('members.list_member'))
     except Exception as e:
         flash(f"Error: {str(e)}", "danger")
-        return redirect(url_for('new_member'))  # Redirect back to form if there's an error
+        return redirect(url_for('members.new_member'))  # Redirect back to form if there's an error
 
 
 @mbp.route('/list-member')

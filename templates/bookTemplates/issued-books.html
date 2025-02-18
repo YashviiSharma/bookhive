@@ -30,7 +30,7 @@
                         <td>{{ transaction.status }}</td>
                         <td>
                             {% if transaction.status == 'Issued' %}
-                                <form action="{{ url_for('return_book', transaction_id=transaction.transaction_id) }}" method="post" class="d-inline">
+                                <form action="{{ url_for('transaction.return_book', transaction_id=transaction.transaction_id) }}" method="post" class="d-inline">
                                     <button type="submit" class="btn btn-sm btn-dark">Return</button>
                                 </form>
                             {% else %}
