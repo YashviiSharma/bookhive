@@ -2,6 +2,7 @@ from peewee import fn
 from datetime import datetime
 from models import Member, Book, Transaction
 from flask import render_template, request, url_for, redirect, flash, Blueprint, jsonify
+
 tbp = Blueprint('transaction', __name__, url_prefix='/transaction')
 
 @tbp.route('/issue-book', methods=['GET'])
@@ -66,7 +67,7 @@ def issue_book():
         else:
             member.fine_due += total_late_fine
 
-        
+
         member.save()
 
 
@@ -114,7 +115,7 @@ def get_member(member_id):
         })
     except Member.DoesNotExist:
         return jsonify({"error": "Member not found"}), 404
-    
+
 
 @tbp.route('/return-book/<int:transaction_id>', methods=['POST'])
 def return_book(transaction_id):
@@ -128,9 +129,9 @@ def return_book(transaction_id):
         flash("This book has already been returned.", "warning")
         return redirect(url_for('transaction.list_issued_books'))
 
-   
-    book = transaction.book_id 
-    book.available_copies = fn.GREATEST(book.available_copies + 1, 0)  
+
+    book = transaction.book_id
+    book.available_copies = fn.GREATEST(book.available_copies + 1, 0)
     book.save()
 
     transaction.return_date = datetime.utcnow()

@@ -20,7 +20,7 @@ def handle_new_member():
     address = request.form.get('address', '')
 
     try:
-        # Create and save a new Member instance
+        # Create and save a new Member instance with keyword arguments
         new_member = Member.create(
             first_name=first_name,
             last_name=last_name,
@@ -31,6 +31,7 @@ def handle_new_member():
         flash("Member added successfully!", "success")
         return redirect(url_for('members.list_member'))
     except Exception as e:
+        print(f"Error: {str(e)}", "danger")
         flash(f"Error: {str(e)}", "danger")
         return redirect(url_for('members.new_member'))  # Redirect back to form if there's an error
 

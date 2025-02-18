@@ -52,7 +52,7 @@ def handle_add_book():
     page_count = request.form.get('page_count')
     category = request.form.get('category')
     available_copies = request.form.get('available_copies')
-    rating = request.form.get('rating')  
+    rating = request.form.get('rating')
     image_url = request.form.get('image_url')
 
     try:
@@ -148,7 +148,7 @@ def import_books():
 
         try:
             while imported_books < number_of_books:
-           
+
                 params = {
                     'page': page,
                     'title': title,
@@ -252,7 +252,7 @@ def download_id_card(member_id):
 
 @bookbp.route('/download-csv', methods=['GET'])
 def download_csv():
-    books = Book.select()  
+    books = Book.select()
 
     output = StringIO()
     writer = csv.writer(output)
@@ -266,5 +266,5 @@ def download_csv():
 
     response = Response(output.getvalue(), mimetype="text/csv")
     response.headers["Content-Disposition"] = "attachment; filename=library_books.csv"
-    
+
     return response
