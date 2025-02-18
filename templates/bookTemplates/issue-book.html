@@ -58,7 +58,7 @@
     document.getElementById('member_id').addEventListener('blur', function() {
         let memberId = this.value;
         if (memberId) {
-            fetch(`/get-member/${memberId}`)
+            fetch(`/transaction/get-member/${memberId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
@@ -78,14 +78,14 @@
         event.preventDefault();
         let bookId = prompt("Enter Book ID:");
         if (bookId) {
-            fetch(`/get-book/${bookId}`)
+            fetch(`/transaction/get-book/${bookId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
                         alert(data.error);
                     } else {
                         let bookContainer = document.getElementById('bookContainer');
-                        
+
                         // Check if the book already exists in the list
                         if (document.querySelector(`[data-book-id="${bookId}"]`)) {
                             alert("This book is already added!");
@@ -117,4 +117,3 @@
 </script>
 
 {% endblock %}
-

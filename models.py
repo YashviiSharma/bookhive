@@ -1,81 +1,144 @@
-
 import os
-from peewee import Model, PostgresqlDatabase, CharField, IntegerField, TextField, BooleanField, DecimalField, AutoField, ForeignKeyField, DateTimeField, Check
+from dataclasses import dataclass
 from datetime import datetime
 from dotenv import load_dotenv
+from supabase import create_client, Client
 
+# Load environment variables
 load_dotenv()
 
-# Database Configuration
-DATABASE = {
-    'name': os.getenv('DB_NAME'),
-    'user': os.getenv('DB_USER'),
-    'password': os.getenv('DB_PASSWORD'),
-    'host': os.getenv('DB_HOST'),
-    'port': int(os.getenv('DB_PORT'))
-}
+# Supabase Configuration
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-db = PostgresqlDatabase(
-    DATABASE['name'],
-    user=DATABASE['user'],
-    password=DATABASE['password'],
-    host=DATABASE['host'],
-    port=DATABASE['port']
-)
 
-class BaseModel(Model):
-    class Meta:
-        database = db
+@dataclass
+class Book:
+    id: int
+    title: str
+    author: str
+    isbn: str
+    publisher: str
+    page_count: int
+    category: str
+    total_copies: int
+    available_copies: int
+    rating: float
+    image_url: str
 
-# Books Table
-class Book(BaseModel):
-    book_id = AutoField(primary_key=True)
-    title = CharField(max_length=255, null=False)
-    author = CharField(max_length=255, null=False)
-    isbn = CharField(max_length=20, unique=True, null=True)
-    publisher = CharField(max_length=255, null=True)
-    page_count = IntegerField(null=True)
-    category = CharField(max_length=100, null=True)
-    total_copies = IntegerField(default=1, null=False)
-    available_copies = IntegerField(default=1, null=False)
-    added_on = DateTimeField(default=datetime.utcnow, null=False)
-    updated_on = DateTimeField(default=datetime.utcnow, null=False)
-    rating = IntegerField(null=False, constraints=[Check('rating BETWEEN 1 AND 5')])  
-    image_url = CharField(null=True)  
+# Books Functions
+def create_book(title, author, isbn=None, publisher=None, page_count=None, category=None,
+                total_copies=1, available_copies=1, rating=1, image_url=None):
+    data = {
+        "title": title,
+        "author": author,
+        "isbn": isbn,
+        "publisher": publisher,
+        "page_count": page_count,
+        "category": category,
+        "total_copies": total_copies,
+        "available_copies": available_copies,
+        "added_on": datetime.utcnow().isoformat(),
+        "updated_on": datetime.utcnow().isoformat(),
+        "rating": rating,
+        "image_url": image_url
+    }
+    response = supabase.table("books").insert(data).execute()
+    return response
 
-# Members Table
-class Member(BaseModel):
-    member_id = AutoField(primary_key=True)
-    first_name = CharField(max_length=100, null=False)
-    last_name = CharField(max_length=100, null=False)
-    email = CharField(max_length=255, unique=True, null=False)
-    phone = CharField(max_length=15, unique=True, null=False)
-    address = TextField(null=True)
-    membership_date = DateTimeField(default=datetime.utcnow, null=False)
-    membership_type = CharField(choices=[('Standard', 'Standard'), ('Premium', 'Premium')], default='Standard', null=True)
-    is_active = BooleanField(default=True, null=True)
-    fine_due = DecimalField(max_digits=10, decimal_places=2, default=0.00, null=True)
-    last_updated = DateTimeField(default=datetime.utcnow, null=True)
+def get_books():
+    response = supabase.table("books").select("*").execute()
+    return response.data
 
-# Transactions Table
-class Transaction(BaseModel):
-    transaction_id = AutoField(primary_key=True)
-    book_id = ForeignKeyField(Book, backref='transactions', on_delete='CASCADE')
-    member_id = ForeignKeyField(Member, backref='transactions', on_delete='CASCADE')
-    issue_date = DateTimeField(default=datetime.utcnow, null=False)
-    due_date = DateTimeField(null=False)
-    return_date = DateTimeField(null=True)
-    fine_amount = DecimalField(max_digits=10, decimal_places=2, default=0.00, null=False)
-    payment_status = CharField(choices=[('Paid', 'Paid'), ('Pending', 'Pending')], default='Pending', null=False)
-    status = CharField(choices=[('Issued', 'Issued'), ('Returned', 'Returned'), ('Overdue', 'Overdue')], default='Issued', null=False)
+def get_book_by_id(book_id):
+    response = supabase.table("books").select("*").eq("id", book_id).execute()
+    return response.data
 
-# Database Initialization
+def update_book(book_id, **kwargs):
+    kwargs["updated_on"] = datetime.utcnow().isoformat()
+    response = supabase.table("books").update(kwargs).eq("book_id", book_id).execute()
+    return response
+
+def delete_book(book_id):
+    response = supabase.table("books").delete().eq("book_id", book_id).execute()
+    return response
+
+# Members Functions
+def create_member(first_name, last_name, email, phone, address=None, membership_type="Standard",
+                  is_active=True, fine_due=0.00):
+    data = {
+        "first_name": first_name,
+        "last_name": last_name,
+        "email": email,
+        "phone": phone,
+        "address": address,
+        "membership_date": datetime.utcnow().isoformat(),
+        "membership_type": membership_type,
+        "is_active": is_active,
+        "fine_due": fine_due,
+        "last_updated": datetime.utcnow().isoformat()
+    }
+    response = supabase.table("members").insert(data).execute()
+    return response
+
+def get_members():
+    response = supabase.table("members").select("*").execute()
+    return response.data
+
+def update_member(member_id, **kwargs):
+    kwargs["last_updated"] = datetime.utcnow().isoformat()
+    response = supabase.table("members").update(kwargs).eq("member_id", member_id).execute()
+    return response
+
+def delete_member(member_id):
+    response = supabase.table("members").delete().eq("member_id", member_id).execute()
+    return response
+
+# Transactions Functions
+def create_transaction(book_id, member_id, due_date, fine_amount=0.00, payment_status="Pending", status="Issued"):
+    data = {
+        "book_id": book_id,
+        "member_id": member_id,
+        "issue_date": datetime.utcnow().isoformat(),
+        "due_date": due_date.isoformat(),
+        "fine_amount": fine_amount,
+        "payment_status": payment_status,
+        "status": status
+    }
+    response = supabase.table("transactions").insert(data).execute()
+    return response
+
+def get_transactions():
+    response = supabase.table("transactions").select("*").execute()
+    return response.data
+
+def update_transaction(transaction_id, **kwargs):
+    response = supabase.table("transactions").update(kwargs).eq("transaction_id", transaction_id).execute()
+    return response
+
+def delete_transaction(transaction_id):
+    response = supabase.table("transactions").delete().eq("transaction_id", transaction_id).execute()
+    return response
+
+
+def get_book_table():
+    return supabase.table("book")
+
+def get_members_table():
+    return supabase.table("member")
+
 def initialize_db():
-    db.connect()
-    db.create_tables([Book, Member, Transaction], safe=True)
-    db.close()
+    response_books = supabase.table('books').select('*', count='exact').execute()
+    if response_books.data is None:
+        print("'books' table not found, create it manually in Supabase.")
+
+    response_member = supabase.table('members').select('*', count='exact').execute()
+    if response_member.data is None:
+        print("'members' table not found, create it manually in Supabase.")
+
+    return len(response_books.data), len(response_member.data)
 
 # Example Usage
 if __name__ == "__main__":
     initialize_db()
-    print("Database initialized and tables created.")
